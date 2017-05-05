@@ -8,6 +8,7 @@ import java.util.Random;
 
 /**
  * 代理类
+ * Java 提供的Proxy代理类，属于静态代理
  * @author yshin1992
  *
  */
