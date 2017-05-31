@@ -31,8 +31,29 @@ class DrawFrame extends JFrame{
 		this.setIconImage(image);
 		
 		//设置内容面板
-		this.add(new DrawComponent());
-		
+		DrawComponent dc = new DrawComponent();
+		this.add(dc);
+		new Thread() {
+			
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				// TODO Auto-generated method stub
+				for(int i = 0; i<100;i++){
+					dc.getGraphics().drawString("hahaha! "+ i,0,50);
+					dc.revalidate();
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}.start();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		
@@ -43,22 +64,11 @@ class DrawFrame extends JFrame{
 class DrawComponent extends JComponent{
 
 	private static final long serialVersionUID = 1L;
-
+	
 	@Override
 	protected void paintComponent(Graphics g) {
-		for(int i = 0 ; i<100;i++){
-			g.drawString("Hello,world" + i, 0, 50);
-			
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-			this.repaint();
-		}
-		
-		
+		super.paintComponent(g);
+		g.drawString("Hello,world", 0, 50);
 	}
 	
 }
