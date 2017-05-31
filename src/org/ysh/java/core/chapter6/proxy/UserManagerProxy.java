@@ -21,6 +21,4 @@ public class UserManagerProxy implements UserManager{
 		System.out.println("execute find end------------------------->");
 		return result;
 	}
-	
-	
 }
