@@ -44,8 +44,8 @@ class DrawFrame extends JFrame{
 				}
 				// TODO Auto-generated method stub
 				for(int i = 0; i<100;i++){
-					dc.getGraphics().drawString("hahaha! "+ i,0,50);
-					dc.revalidate();
+					dc.setContent("hahaha! "+ i);
+					dc.repaint();
 					try {
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {
@@ -65,10 +65,19 @@ class DrawComponent extends JComponent{
 
 	private static final long serialVersionUID = 1L;
 	
+	static int CLICKCOUNT = 0;
+	
+	private String content = "Hello,world";
+	
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.drawString("Hello,world", 0, 50);
+		g.drawString(content , 0, 50);
 	}
 	
 }

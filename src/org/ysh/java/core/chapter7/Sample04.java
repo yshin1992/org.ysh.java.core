@@ -11,7 +11,6 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.LineMetrics;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.Line2D.Double;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
