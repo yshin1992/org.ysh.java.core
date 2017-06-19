@@ -58,7 +58,7 @@ class LAFIFrame extends JFrame{
 	private void makeBtns(){
 		LookAndFeelInfo[] installedLookAndFeels = UIManager.getInstalledLookAndFeels();
 		if(null != installedLookAndFeels && installedLookAndFeels.length>0){
-			for(LookAndFeelInfo laf : installedLookAndFeels){
+			for(final LookAndFeelInfo laf : installedLookAndFeels){
 				JButton btn = new JButton(laf.getName());
 				panel.add(btn);
 				btn.addActionListener(new ActionListener() {
@@ -81,7 +81,7 @@ class LAFIFrame extends JFrame{
 	private void makeMenus(){
 		LookAndFeelInfo[] installedLookAndFeels = UIManager.getInstalledLookAndFeels();
 		if(null != installedLookAndFeels && installedLookAndFeels.length>0){
-			for(LookAndFeelInfo laf : installedLookAndFeels){
+			for(final LookAndFeelInfo laf : installedLookAndFeels){
 				JMenuItem item = new JMenuItem(laf.getName());
 				lafmenu.add(item);
 				item.addActionListener(new ActionListener() {

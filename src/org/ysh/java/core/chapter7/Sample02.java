@@ -31,7 +31,7 @@ class DrawFrame extends JFrame{
 		this.setIconImage(image);
 		
 		//设置内容面板
-		DrawComponent dc = new DrawComponent();
+		final DrawComponent dc = new DrawComponent();
 		this.add(dc);
 		new Thread() {
 			
