@@ -1,4 +1,4 @@
-package org.ysh.java.core.tank;
+package org.ysh.java.core.tank.v1;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -58,7 +58,7 @@ class TankPanel extends JPanel{
 	
 	private static final int WIDTH = 800,HEIGHT = 800;
 
-	private TankComponent tank = new TankComponent(new Point2D.Double(10,10),Const.UP);
+	private TankComponent tank = new TankComponent(new Point2D.Double(10,10),Const.DIRECTION_UP);
 	
 	@Override
 	public void paint(Graphics g) {
@@ -100,23 +100,23 @@ class TankPanel extends JPanel{
 				if(y > 0){
 					y-=20;
 				}
-				direct = Const.UP;
+				direct = Const.DIRECTION_UP;
 //				y-=5;
 			}else if(e.getKeyCode() == KeyEvent.VK_S){
 //				y+=5;
 				if(y <= WIDTH-20){
 					y+=20;
 				}
-				direct = Const.DOWN;
+				direct = Const.DIRECTION_DOWN;
 				
 			}else if(e.getKeyCode() == KeyEvent.VK_A){
 //				x-=5;
 				x-=20;
-				direct = Const.LEFT;
+				direct = Const.DIRECTION_LEFT;
 			}else if(e.getKeyCode() == KeyEvent.VK_D){
 //				x+=5;
 				x+=20;
-				direct = Const.RIGHT;
+				direct = Const.DIRECTION_RIGHT;
 			}
 			tank.setPosition(new Point2D.Double(x,y), direct);
 			tank.drawComponent();
