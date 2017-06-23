@@ -12,7 +12,9 @@ import javax.swing.JPanel;
 
 import org.ysh.java.core.tank.v2.Bullet;
 import org.ysh.java.core.tank.v2.BulletThread;
+import org.ysh.java.core.tank.v2.ConfigUtil;
 import org.ysh.java.core.tank.v2.ObjectUtil;
+import org.ysh.java.core.tank.v2.stages.Stage;
 
 public class TankComponent {
 	final Lock lock = new ReentrantLock();
@@ -154,4 +156,44 @@ public class TankComponent {
 			new BulletThread(bullet,panel).start();
 		}
 	}
+	
+	public boolean isOverride(int direct,List<TankComponent> others,Stage stage){
+		Point2D ltPos = this.getPosition();
+		switch (direct) {
+		case Const.DIRECTION_UP:
+			return isOverride(new Rectangle2D.Double(ltPos.getX(), ltPos.getY()-ConfigUtil.getRunStep(),40,40),others,stage,direct);
+		case Const.DIRECTION_DOWN:
+			return isOverride(new Rectangle2D.Double(ltPos.getX(), ltPos.getY()+ConfigUtil.getRunStep(),40,40),others,stage,direct);
+		case Const.DIRECTION_LEFT:
+			return isOverride(new Rectangle2D.Double(ltPos.getX()-ConfigUtil.getRunStep(), ltPos.getY(),40,40),others,stage,direct);
+		case Const.DIRECTION_RIGHT:
+			return isOverride(new Rectangle2D.Double(ltPos.getX()+ConfigUtil.getRunStep(), ltPos.getY(),40,40),others,stage,direct);
+		default:
+			break;
+		}
+		return false;
+	}
+	
+	private boolean isOverride(Rectangle2D rect,List<TankComponent> others,Stage stage,int direct){
+		//判断是不是和其他tank相重叠
+		if(ObjectUtil.collectionNotEmpty(others)){
+			for(TankComponent other : others){
+				Point2D tmp = other.getPosition();
+				Rectangle2D tmpRect = new Rectangle2D.Double(tmp.getX(),tmp.getY(),40,40);
+				return tmpRect.contains(rect);
+			}
+		}
+		
+		//判断是不是和其他场景物重叠
+		List<Rectangle2D> walls = stage.getWalls();
+		if(ObjectUtil.collectionNotEmpty(walls)){
+			for(Rectangle2D wall : walls){
+				return rect.contains(wall);
+			}
+		}
+		
+		return false;
+	}
+	
+	
 }

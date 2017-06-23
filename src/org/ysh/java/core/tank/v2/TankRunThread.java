@@ -20,6 +20,9 @@ public class TankRunThread extends Thread {
 	
 	private boolean isStarted = false;
 	
+	//让tank沿着一条方向直行一段时间，而不是随时随刻都在变换方向的计数变量
+	private int count = 0;
+	
 	public TankRunThread(TankComponent enemy,JPanel panel) {
 		this.enemy = enemy;
 		this.panel = panel;
@@ -37,7 +40,7 @@ public class TankRunThread extends Thread {
 		}
 		while(true){
 			try {
-				sleep(500);
+				sleep(300);
 				updateTank(enemy);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -49,7 +52,11 @@ public class TankRunThread extends Thread {
 		Point2D currentPos = tank.getPosition();
 		double currentX = currentPos.getX();
 		double currentY = currentPos.getY();
-		int direct = (int) (Math.floor(Math.random()*4) + 1);
+		int direct = tank.getDirection();
+		
+		if(count ++ % 5 == 0){
+			direct = (int) (Math.floor(Math.random()*4) + 1);
+		}
 		
 		switch (direct) {
 		case Const.DIRECTION_UP:

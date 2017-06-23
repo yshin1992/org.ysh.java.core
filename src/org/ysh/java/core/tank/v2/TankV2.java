@@ -15,6 +15,8 @@ import javax.swing.JPanel;
 
 import org.ysh.java.core.tank.v1.Const;
 import org.ysh.java.core.tank.v1.TankComponent;
+import org.ysh.java.core.tank.v2.stages.Stage;
+import org.ysh.java.core.tank.v2.stages.Stage1;
 
 public class TankV2 {
 
@@ -57,6 +59,9 @@ class TankPanelV2 extends JPanel{
 
 	private TankComponent tank;
 	
+	//关卡场景
+	private Stage stage;
+	
 	private List<TankComponent> enemis = new ArrayList<TankComponent>();	
 	
 	@Override
@@ -66,14 +71,22 @@ class TankPanelV2 extends JPanel{
 		
 		Graphics2D g2D = (Graphics2D) g;
 		
+		
 		g2D.setColor(Color.black);
 		g2D.fill(new Rectangle2D.Double(0,0,ConfigUtil.getAreaWidth(),ConfigUtil.getAreaHeight()));
 		
+		//描绘关卡的障碍物
+		List<Rectangle2D> walls = stage.getWalls();
+		g2D.setColor(Color.white);
+		for(Rectangle2D wall : walls){
+			g2D.fill3DRect((int)wall.getX(),(int)wall.getY(),(int)wall.getWidth(),(int)wall.getHeight(),true);
+		}
+		
 		g2D.setColor(Color.yellow);
-		g2D.fill(tank.getWheel1());
-		g2D.fill(tank.getWheel2());
-		g2D.fill(tank.getBody());
-		g2D.fill(tank.getBarrel());
+		g2D.fill3DRect((int)tank.getWheel1().getX(),(int)tank.getWheel1().getY(),(int)tank.getWheel1().getWidth(),(int)tank.getWheel1().getHeight(),true);
+		g2D.fill3DRect((int)tank.getWheel2().getX(),(int)tank.getWheel2().getY(),(int)tank.getWheel2().getWidth(),(int)tank.getWheel2().getHeight(),true);
+		g2D.fill3DRect((int)tank.getBody().getX(),(int)tank.getBody().getY(),(int)tank.getBody().getWidth(),(int)tank.getBody().getHeight(),true);
+		g2D.fill3DRect((int)tank.getBarrel().getX(),(int)tank.getBarrel().getY(),(int)tank.getBarrel().getWidth(),(int)tank.getBarrel().getHeight(),true);
 
 		List<Bullet> bullets = tank.getBullets();
 		if(ObjectUtil.collectionNotEmpty(bullets)){
@@ -89,10 +102,10 @@ class TankPanelV2 extends JPanel{
 		
 		for(TankComponent enemy:enemis){
 			g2D.setColor(Color.GRAY);
-			g2D.fill(enemy.getWheel1());
-			g2D.fill(enemy.getWheel2());
-			g2D.fill(enemy.getBody());
-			g2D.fill(enemy.getBarrel());
+			g2D.fill3DRect((int)enemy.getWheel1().getX(),(int)enemy.getWheel1().getY(),(int)enemy.getWheel1().getWidth(),(int)enemy.getWheel1().getHeight(),true);
+			g2D.fill3DRect((int)enemy.getWheel2().getX(),(int)enemy.getWheel2().getY(),(int)enemy.getWheel2().getWidth(),(int)enemy.getWheel2().getHeight(),true);
+			g2D.fill3DRect((int)enemy.getBody().getX(),(int)enemy.getBody().getY(),(int)enemy.getBody().getWidth(),(int)enemy.getBody().getHeight(),true);
+			g2D.fill3DRect((int)enemy.getBarrel().getX(),(int)enemy.getBarrel().getY(),(int)enemy.getBarrel().getWidth(),(int)enemy.getBarrel().getHeight(),true);
 			
 			List<Bullet> ebullets = enemy.getBullets();
 			if(ObjectUtil.collectionNotEmpty(ebullets)){
@@ -109,7 +122,7 @@ class TankPanelV2 extends JPanel{
 		super();
 		this.addKeyListener(new KeyEventListener());
 		
-		tank = new TankComponent(new Point2D.Double((ConfigUtil.getAreaWidth()-40)/2,ConfigUtil.getAreaHeight()-40),Const.DIRECTION_UP);
+		tank = new TankComponent(new Point2D.Double(ConfigUtil.getAreaWidth()/2-80,ConfigUtil.getAreaHeight()-40),Const.DIRECTION_UP);
 		
 		TankComponent enemy1 = new TankComponent(new Point2D.Double(0,0),Const.DIRECTION_DOWN);
 		TankComponent enemy2 = new TankComponent(new Point2D.Double((ConfigUtil.getAreaWidth()-40)/2,0),Const.DIRECTION_DOWN);
@@ -123,6 +136,7 @@ class TankPanelV2 extends JPanel{
 			new TankRunThread(enemy,this).start();
 		}
 		
+		stage = new Stage1();
 	}
 	
 	class KeyEventListener implements KeyListener{
@@ -139,26 +153,26 @@ class TankPanelV2 extends JPanel{
 			int direct = tank.getDirection();
 			if(e.getKeyCode() == KeyEvent.VK_W){
 				
-				if(y > 0){
+				if(y > 0 && direct ==  Const.DIRECTION_UP && !tank.isOverride(direct, enemis, stage)){
 					y-=ConfigUtil.getRunStep();
 				}
 				direct = Const.DIRECTION_UP;
 			}else if(e.getKeyCode() == KeyEvent.VK_S){
 				
-				if(y <= ConfigUtil.getAreaHeight()-60){
+				if(y <= ConfigUtil.getAreaHeight()-60 && direct ==  Const.DIRECTION_DOWN && !tank.isOverride(direct, enemis, stage)){
 					y+=ConfigUtil.getRunStep();
 				}
 				direct = Const.DIRECTION_DOWN;
 				
 			}else if(e.getKeyCode() == KeyEvent.VK_A){
 				
-				if(x>=ConfigUtil.getRunStep()){
+				if(x>=ConfigUtil.getRunStep() && direct ==  Const.DIRECTION_LEFT && !tank.isOverride(direct, enemis, stage)){
 					x-=ConfigUtil.getRunStep();
 				}
 				direct = Const.DIRECTION_LEFT;
 			}else if(e.getKeyCode() == KeyEvent.VK_D){
 				
-				if(x<= ConfigUtil.getAreaWidth()-60){
+				if(x<= ConfigUtil.getAreaWidth()-60  && direct ==  Const.DIRECTION_RIGHT && !tank.isOverride(direct, enemis, stage)){
 					x+=ConfigUtil.getRunStep();
 				}
 				direct = Const.DIRECTION_RIGHT;
@@ -180,7 +194,6 @@ class TankPanelV2 extends JPanel{
 					break;
 				}
 				tank.fire(point, tank.getDirection(), 1, TankPanelV2.this);
-				
 			}
 			tank.setPosition(new Point2D.Double(x,y), direct);
 			tank.drawComponent();
