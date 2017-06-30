@@ -46,6 +46,8 @@ public class TankComponent {
 	
 	int direction;//1 上 2下 3 左 4右
 	
+	private boolean isAlive = true;
+	
 	public TankComponent(Point2D initPos,int initDirect){
 		this.position = initPos;
 		this.direction = initDirect;
@@ -82,6 +84,14 @@ public class TankComponent {
 		this.direction = direct;
 	}
 	
+	public void setAlive(boolean isAlive) {
+		this.isAlive = isAlive;
+	}
+
+	public boolean isAlive() {
+		return isAlive;
+	}
+
 	public void drawComponent(){
 		switch(this.direction){
 		case Const.DIRECTION_UP:
@@ -140,7 +150,7 @@ public class TankComponent {
 	 * @param direction
 	 * @param speed
 	 */
-	public void fire(Point2D point,int direction,int speed,JPanel panel){
+	public void fire(Point2D point,int direction,int speed,JPanel panel,List<TankComponent> enemies,Stage stage){
 		if(ObjectUtil.collectionNotEmpty(bullets)){
 			Iterator<Bullet> iter = bullets.iterator();
 			while(iter.hasNext()){
@@ -153,34 +163,55 @@ public class TankComponent {
 		if(level > bullets.size()){
 			Bullet bullet = new Bullet(point,direction,speed);
 			bullets.add(bullet);
-			new BulletThread(bullet,panel).start();
+			new BulletThread(bullet,panel,enemies,stage).start();
 		}
 	}
 	
+	/**
+	 * 判断是不是和其他场景或者tank重叠
+	 * @param direct
+	 * @param others
+	 * @param stage
+	 * @return
+	 */
 	public boolean isOverride(int direct,List<TankComponent> others,Stage stage){
 		Point2D ltPos = this.getPosition();
 		switch (direct) {
 		case Const.DIRECTION_UP:
-			return isOverride(new Rectangle2D.Double(ltPos.getX(), ltPos.getY()-ConfigUtil.getRunStep(),40,40),others,stage,direct);
+			return isOverride(new Rectangle2D.Double(ltPos.getX(), ltPos.getY()-ConfigUtil.getRunStep(),40,40),others,stage);
 		case Const.DIRECTION_DOWN:
-			return isOverride(new Rectangle2D.Double(ltPos.getX(), ltPos.getY()+ConfigUtil.getRunStep(),40,40),others,stage,direct);
+			return isOverride(new Rectangle2D.Double(ltPos.getX(), ltPos.getY()+ConfigUtil.getRunStep(),40,40),others,stage);
 		case Const.DIRECTION_LEFT:
-			return isOverride(new Rectangle2D.Double(ltPos.getX()-ConfigUtil.getRunStep(), ltPos.getY(),40,40),others,stage,direct);
+			return isOverride(new Rectangle2D.Double(ltPos.getX()-ConfigUtil.getRunStep(), ltPos.getY(),40,40),others,stage);
 		case Const.DIRECTION_RIGHT:
-			return isOverride(new Rectangle2D.Double(ltPos.getX()+ConfigUtil.getRunStep(), ltPos.getY(),40,40),others,stage,direct);
+			return isOverride(new Rectangle2D.Double(ltPos.getX()+ConfigUtil.getRunStep(), ltPos.getY(),40,40),others,stage);
 		default:
 			break;
 		}
 		return false;
 	}
 	
-	private boolean isOverride(Rectangle2D rect,List<TankComponent> others,Stage stage,int direct){
+	private boolean isOverride(Rectangle2D rect,List<TankComponent> others,Stage stage){
+		
+		int selfXmin = (int) rect.getX();
+		int selfXmax = (int) (rect.getX() + 40);
+		int selfYmin = (int) rect.getY();
+		int selfYmax = (int) (rect.getY() + 40);
+		
 		//判断是不是和其他tank相重叠
 		if(ObjectUtil.collectionNotEmpty(others)){
 			for(TankComponent other : others){
 				Point2D tmp = other.getPosition();
-				Rectangle2D tmpRect = new Rectangle2D.Double(tmp.getX(),tmp.getY(),40,40);
-				return tmpRect.contains(rect);
+				int otherXmin = (int) tmp.getX();
+				int otherXmax = (int) (tmp.getX() + 40);
+				int otherYmin = (int) tmp.getY();
+				int otherYmax = (int) (tmp.getY() + 40);
+				
+				boolean contains = (selfXmin < otherXmax && selfXmax > otherXmin && selfYmin < otherYmax && selfYmax > otherYmin) || (otherXmin == selfXmin && otherYmin == selfYmin);
+				if(contains){
+					System.out.println(tmp);
+					return contains;
+				}
 			}
 		}
 		
@@ -188,7 +219,17 @@ public class TankComponent {
 		List<Rectangle2D> walls = stage.getWalls();
 		if(ObjectUtil.collectionNotEmpty(walls)){
 			for(Rectangle2D wall : walls){
-				return rect.contains(wall);
+				
+				int otherXmin = (int) wall.getX();
+				int otherXmax = (int) (wall.getX() + 20);
+				int otherYmin = (int) wall.getY();
+				int otherYmax = (int) (wall.getY() + 20);
+				
+				boolean contains = selfXmin < otherXmax && selfXmax > otherXmin && selfYmin < otherYmax && selfYmax > otherYmin;
+				if(contains){
+					System.out.println(wall);
+					return contains;
+				}
 			}
 		}
 		

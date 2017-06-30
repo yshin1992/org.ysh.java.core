@@ -104,6 +104,6 @@ public class ConfigUtil {
 	}
 	
 	public static final int getBulletStep(){
-		return 5;
+		return 15;
 	}
 }
