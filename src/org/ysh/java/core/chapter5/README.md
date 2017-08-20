@@ -2,3 +2,12 @@
 1.ExtendSample,Manager(详解继承和类型转换)
 2.PreventExtendSample(阻止继承)
 3.AbstractClassSample(抽象类)
+4.ProtectedSample(Protected修饰符)
+5.ObjectSample(所有类的超类Object)
+6.EqualsSample(equals方法书写建议)
+7.HashCodeSample
+8.ToStringSample
+9.ListSample(泛型数组)
+10.AutoBoxSample(自动拆箱和自动装箱)
+11.EnumSample(枚举常量实例)
+12.ClassSample(java.lang.reflect.Class)
