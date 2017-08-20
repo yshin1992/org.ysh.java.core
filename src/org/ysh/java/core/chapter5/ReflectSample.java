@@ -9,9 +9,9 @@ public class ReflectSample {
 	
 	public static void main(String[] args) {
 		Class<?> clazz = Double.class;
-//		printConstructors(clazz);
+		printConstructors(clazz);
 		printFields(clazz);
-//		printMethods(clazz);
+		printMethods(clazz);
 	}
 	/**
 	 * 构造函数
@@ -39,8 +39,21 @@ public class ReflectSample {
 						System.out.print(",");
 					}
 				}
-				System.out.println(");");
 			}
+			System.out.print(")");
+			
+			//Exceptions
+			Class<?>[] exceptions = cst.getExceptionTypes();
+			if(null!=exceptions && exceptions.length>0) {
+				System.out.print(" throw ");
+				for(int i=0;i<exceptions.length;i++) {
+					System.out.print(exceptions[i].getName());
+					if(i<exceptions.length-1) {
+						System.out.print(",");
+					}
+				}
+			}
+			System.out.println(";");
 		}
 	}
 	
@@ -87,7 +100,20 @@ public class ReflectSample {
 						}
 					}
 				}
-				System.out.println(");");
+				System.out.print(")");
+				
+				//Exceptions
+				Class<?>[] exceptions = m.getExceptionTypes();
+				if(null!=exceptions && exceptions.length>0) {
+					System.out.print(" throw ");
+					for(int i=0;i<exceptions.length;i++) {
+						System.out.print(exceptions[i].getName());
+						if(i<exceptions.length-1) {
+							System.out.print(",");
+						}
+					}
+				}
+				System.out.println(";");
 			}
 		}
 		
