@@ -12,3 +12,4 @@
 11.EnumSample(枚举常量实例)
 12.ClassSample(java.lang.reflect.Class)
 13.ReflectSample(反射类的构造函数，域，和方法名)
+14.ObjectAnalyzerSample(反射类的属性域，完成通用toString方法)
