@@ -4,7 +4,10 @@ import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.ysh.java.core.chapter4.Employee;
 
 /**
  * 通用toString()方法
@@ -16,8 +19,16 @@ public class ObjectAnalyzerSample {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		String str = "Hello";
-		String res = toString2(str);
+		String res = toString3(str);
 		System.out.println(res);
+		
+		Employee em1 = new Employee("Jane", 5000, 2014, 1, 13);
+		System.out.println(toString3(em1));
+		
+		List<Employee> ems = new ArrayList<Employee>();
+		ems.add(em1);
+		ems.add(new Employee("Salary", 10000, 2013, 1, 10));
+		System.out.println(toString3(ems));
 	}
 
 	/**
@@ -102,6 +113,75 @@ public class ObjectAnalyzerSample {
 								}
 							}
 							builder.append("}");
+						}
+						
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			builder.append("]");
+			clazz = clazz.getSuperclass();
+		}while(null != clazz);
+		return builder.toString();
+	}
+	
+	/**
+	 * 针对数组进行修正版本，同时为了防止递归，导致循环引用，加入存储已访问过的对象队列
+	 * @param obj
+	 * @return
+	 */
+	private static List<Object> visited = new ArrayList<Object>();
+	
+	public static String toString3(Object obj) {
+		StringBuilder builder = new StringBuilder();
+		if(null == obj) {
+			return "null";
+		}
+		if(visited.contains(obj)) {
+			return "...";
+		}else {
+			visited.add(obj);
+		}
+		Class<?> clazz = obj.getClass();
+		//针对数组的情况做单独的处理
+		if(clazz.isArray()) {
+			builder.append(clazz.getComponentType().getTypeName() + "[]{");
+			int len = Array.getLength(obj);
+			for(int i=0;i<len;i++){
+				Object val = Array.get(obj, i);
+				if(clazz.getComponentType().isPrimitive()) {
+					builder.append(val);
+				}else {
+					builder.append(toString3(val));
+				}
+				
+				if(i<len-1) {
+					builder.append(",");
+				}
+			}
+			builder.append("}");
+			return builder.toString();
+		}
+		
+		builder.append(clazz.getName() + "");
+		do {
+			builder.append("[");
+			Field[] fs = clazz.getDeclaredFields();
+			AccessibleObject.setAccessible(fs, true);
+			for(Field f:fs) {
+				if(!Modifier.isStatic(f.getModifiers())) {
+					if(!builder.toString().endsWith("[")) {
+						builder.append(",");
+					}
+					builder.append(f.getName() + "=");
+					try {
+						Object val = f.get(obj);
+						Class<?> type = f.getType();
+						if(type.isPrimitive()) {
+							builder.append(val);
+						}else{
+							builder.append(toString3(val));
 						}
 						
 					}catch(Exception e) {
