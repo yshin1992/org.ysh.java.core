@@ -12,7 +12,7 @@ public class BigDecimalTest {
 		
 		bd = bd.setScale(2, BigDecimal.ROUND_HALF_UP);
 		
-		System.out.println(bd.doubleValue());
+		System.out.println(bd.toString());
 	}
 
 }
