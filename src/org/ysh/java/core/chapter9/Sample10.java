@@ -32,12 +32,15 @@ public class Sample10 {
 			
 			redBtn = new JButton("Red");
 			redBtn.addActionListener(new ColorActionListener(Color.RED));
+			redBtn.setToolTipText("Red");
 			
 			blueBtn = new JButton("Blue");
 			blueBtn.addActionListener(new ColorActionListener(Color.BLUE));
+			blueBtn.setToolTipText("Blue");
 			
 			yellowBtn = new JButton("Yellow");
 			yellowBtn.addActionListener(new ColorActionListener(Color.YELLOW));
+			yellowBtn.setToolTipText("Yellow");
 			
 			toolBar.add(redBtn);
 			toolBar.add(blueBtn);
