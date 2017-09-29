@@ -132,8 +132,10 @@ class OptionDialogFrame extends JFrame
    {
       String s = optionsPanel.getSelection();
       if (s.equals("String[]")) return new String[] { "Yellow", "Blue", "Red" };
-      else if (s.equals("Icon[]")) return new Icon[] { new ImageIcon("yellow-ball.gif"),
-            new ImageIcon("blue-ball.gif"), new ImageIcon("red-ball.gif") };
+//      else if (s.equals("Icon[]")) return new Icon[] { new ImageIcon("yellow-ball.gif"),
+//            new ImageIcon("blue-ball.gif"), new ImageIcon("red-ball.gif") };
+      else if (s.equals("Icon[]")) return new Icon[] { new ImageIcon(OptionDialogFrame.class.getResource("yellow-ball.gif")),
+              new ImageIcon(OptionDialogFrame.class.getResource("blue-ball.gif")), new ImageIcon(OptionDialogFrame.class.getResource("red-ball.gif")) };
       else if (s.equals("Object[]")) return new Object[] { messageString, messageIcon,
             messageComponent, messageObject };
       else return null;
