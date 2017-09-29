@@ -101,13 +101,35 @@ class ImageViewerFrame extends JFrame
          if (result == JFileChooser.APPROVE_OPTION)
          {
             String name = chooser.getSelectedFile().getPath();
-            label.setIcon(new ImageIcon(name));
+            //在这里，如果图片的高度或宽度大于Label的宽度或高度，则将图片按照其宽度和高度比例进行缩放展示
+            ImageIcon icon = new ImageIcon(name);
+            int iconHeight = icon.getIconHeight();
+            int iconWidth = icon.getIconWidth();
+            
+            int labelWidth = label.getWidth();
+            int labelHeight = label.getHeight();
+            Image img = icon.getImage();
+            if(iconHeight > labelHeight || iconWidth > labelWidth){
+            	//按比例进行缩放展示
+            	if(iconHeight > labelHeight){
+            		img = img.getScaledInstance(-1, labelHeight, Image.SCALE_DEFAULT);
+            		iconHeight = labelHeight;
+            		iconWidth = img.getWidth(null);
+            	}
+            	
+            	if(iconWidth > labelWidth){
+            		img = img.getScaledInstance(labelWidth, -1, Image.SCALE_DEFAULT);
+            	}
+            	
+            }
+            icon.setImage(img);
+            label.setIcon(icon);
          }
       }
    }
 
-   public static final int DEFAULT_WIDTH = 300;
-   public static final int DEFAULT_HEIGHT = 400;
+   public static final int DEFAULT_WIDTH = 600;
+   public static final int DEFAULT_HEIGHT = 800;
 
    private JLabel label;
    private JFileChooser chooser;
