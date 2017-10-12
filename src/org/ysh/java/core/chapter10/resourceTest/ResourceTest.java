@@ -1,4 +1,4 @@
-package org.ysh.java.core.chapter10;
+package org.ysh.java.core.chapter10.resourceTest;
 
 import java.awt.*;
 import java.io.*;
