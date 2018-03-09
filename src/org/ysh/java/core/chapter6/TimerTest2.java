@@ -36,7 +36,7 @@ public class TimerTest2 {
 			System.out.println("当前时间:"+ sdf.format(new Date()));
 			//可以访问外部成员变量
 			if(beap){
-				System.out.println("beep.........."+count);//也可访问外部静态变量
+				System.out.println("beep.........."+count++);//也可访问外部静态变量
 			}
 		}
 	}
