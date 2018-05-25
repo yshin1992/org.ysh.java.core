@@ -5,8 +5,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JPanel;
-
 import org.ysh.java.core.tank.v1.Const;
 import org.ysh.java.core.tank.v1.TankComponent;
 import org.ysh.java.core.tank.v2.ConfigUtil;
@@ -85,13 +83,13 @@ public class Stage1 implements Stage{
 	public void newTank(int count) {
 		this.count = count;
 		System.out.println(count);
-		if(count == 6){
+	/*	if(count == 6){
 			panel.setFinished(true);
 			panel.repaint();
 			return;
-		}
+		}*/
 		
-		if(count > 3){
+		if(count > 20){
 			return;
 		}
 		TankComponent newTank = null;
