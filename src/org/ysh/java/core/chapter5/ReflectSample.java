@@ -45,7 +45,7 @@ public class ReflectSample {
 			//Exceptions
 			Class<?>[] exceptions = cst.getExceptionTypes();
 			if(null!=exceptions && exceptions.length>0) {
-				System.out.print(" throw ");
+				System.out.print(" throws ");
 				for(int i=0;i<exceptions.length;i++) {
 					System.out.print(exceptions[i].getName());
 					if(i<exceptions.length-1) {
@@ -105,7 +105,7 @@ public class ReflectSample {
 				//Exceptions
 				Class<?>[] exceptions = m.getExceptionTypes();
 				if(null!=exceptions && exceptions.length>0) {
-					System.out.print(" throw ");
+					System.out.print(" throws ");
 					for(int i=0;i<exceptions.length;i++) {
 						System.out.print(exceptions[i].getName());
 						if(i<exceptions.length-1) {
