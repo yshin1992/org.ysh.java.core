@@ -33,7 +33,7 @@ public class TimerTest5 {
 	
 	public static void main(String[] args) {
 		//静态内部类可以直接初始化
-		TimerPrinter5 tp5 = new TimerPrinter5();
+		TimerTest5.TimerPrinter5 tp5 = new TimerTest5.TimerPrinter5();
 		Timer timer = new Timer(1000,tp5);
 		timer.start();
 		JOptionPane.showMessageDialog(null, "退出程序");
