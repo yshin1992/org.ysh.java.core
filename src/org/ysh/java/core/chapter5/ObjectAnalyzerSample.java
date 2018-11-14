@@ -146,7 +146,7 @@ public class ObjectAnalyzerSample {
 		Class<?> clazz = obj.getClass();
 		//针对数组的情况做单独的处理
 		if(clazz.isArray()) {
-			builder.append(clazz.getComponentType().getTypeName() + "[]{");
+			builder.append(clazz.getComponentType().getName() + "[]{");
 			int len = Array.getLength(obj);
 			for(int i=0;i<len;i++){
 				Object val = Array.get(obj, i);

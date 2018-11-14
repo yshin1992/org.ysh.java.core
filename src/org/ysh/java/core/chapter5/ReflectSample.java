@@ -34,7 +34,7 @@ public class ReflectSample {
 			if(null != parameterTypes && parameterTypes.length > 0) {
 				for(int i=0;i<parameterTypes.length;i++) {
 					Class<?> tmp = parameterTypes[i];
-					System.out.print(tmp.getTypeName());
+					System.out.print(tmp.getName());
 					if(i < parameterTypes.length - 1) {
 						System.out.print(",");
 					}
@@ -71,7 +71,7 @@ public class ReflectSample {
 					System.out.print(modifier + " ");
 				}
 				String name = field.getName();
-				String type = field.getType().getTypeName();
+				String type = field.getType().getName();
 				System.out.println(type+ " " + name + ";");
 			}
 		}
@@ -82,7 +82,7 @@ public class ReflectSample {
 		if(null != methods && methods.length > 0) {
 			for(Method m : methods) {
 				System.out.print(" ");
-				String returnType = m.getReturnType().getTypeName();
+				String returnType = m.getReturnType().getName();
 				String modifier = Modifier.toString(m.getModifiers());
 				if(modifier.length() > 0) {
 					System.out.print(modifier + " ");
@@ -93,7 +93,7 @@ public class ReflectSample {
 				Class<?>[] parameterTypes = m.getParameterTypes();
 				if(null != parameterTypes && parameterTypes.length > 0) {
 					for(int i =0;i<parameterTypes.length;i++) {
-						String paramType = parameterTypes[i].getTypeName();
+						String paramType = parameterTypes[i].getName();
 						System.out.print(paramType);
 						if(i < parameterTypes.length - 1) {
 							System.out.print(",");

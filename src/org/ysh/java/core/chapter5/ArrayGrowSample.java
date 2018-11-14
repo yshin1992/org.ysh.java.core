@@ -46,7 +46,7 @@ public class ArrayGrowSample {
 		
 		Class<?> type = clazz.getComponentType();
 		int len = Array.getLength(obj);
-		System.out.print(type.getTypeName() + "[" + len + "] = { ");
+		System.out.print(type.getName() + "[" + len + "] = { ");
 		for(int i=0;i<len;i++) {
 			System.out.print(Array.get(obj, i) + " ");
 		}
