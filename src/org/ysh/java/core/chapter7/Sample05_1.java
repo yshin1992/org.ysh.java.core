@@ -287,7 +287,7 @@ class ImageSelectorFrame extends JFrame{
 		preAm.put("previous", new PreviousNextAction(true));
 		InputMap preIm = previous.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 		preIm.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, InputEvent.CTRL_MASK), "previous");
-		
+		//再添加一个快捷键，验证一个ActionMap可以对应多个InputMap
 		preIm.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK), "previous");
 		
 		//添加快捷键，实现Ctrl + -> 实现翻看下一张图片的功能
