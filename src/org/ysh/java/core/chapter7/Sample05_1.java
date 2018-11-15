@@ -4,20 +4,17 @@ import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.awt.image.Raster;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Iterator;
 
 import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.FileImageInputStream;
-import javax.imageio.stream.ImageInputStream;
-import javax.swing.Action;
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -32,8 +29,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.filechooser.FileFilter;
-
-import org.ysh.java.core.chapter8.Sample02.LAFIFrame;
 
 public class Sample05_1 {
 
@@ -53,6 +48,8 @@ public class Sample05_1 {
 
 class ImageSelectorFrame extends JFrame{
 	
+	private static final long serialVersionUID = 1L;
+
 	private JMenuBar bar = new JMenuBar();
 	
 	private JMenu fileMenu = new JMenu("文件(Alt+F)");
@@ -77,8 +74,9 @@ class ImageSelectorFrame extends JFrame{
 	
 	private JMenu lafmenu = new JMenu("Appearance");
 	
-	private class PreviousNextAction implements ActionListener{
+	private class PreviousNextAction extends AbstractAction{
 		
+		private static final long serialVersionUID = 1L;
 		private boolean isPrevious;
 		
 		public PreviousNextAction(boolean isPrevious){
@@ -127,7 +125,9 @@ class ImageSelectorFrame extends JFrame{
 		}
 	};
 	
-	
+	/**
+	 * 外观菜单栏项设置
+	 */
 	private void makeMenus(){
 		LookAndFeelInfo[] installedLookAndFeels = UIManager.getInstalledLookAndFeels();
 		if(null != installedLookAndFeels && installedLookAndFeels.length>0){
@@ -281,6 +281,22 @@ class ImageSelectorFrame extends JFrame{
 		next.addActionListener(new PreviousNextAction(false));
 		toolBar.add(previous);
 		toolBar.add(next);
+		
+		//添加快捷键，实现Ctrl + <- 实现翻看上一张图片的功能
+		ActionMap preAm = previous.getActionMap();
+		preAm.put("previous", new PreviousNextAction(true));
+		InputMap preIm = previous.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+		preIm.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, InputEvent.CTRL_MASK), "previous");
+		
+		preIm.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK), "previous");
+		
+		//添加快捷键，实现Ctrl + -> 实现翻看下一张图片的功能
+		ActionMap nextAm = next.getActionMap();
+		nextAm.put("next", new PreviousNextAction(false));
+		InputMap nextIm = next.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+		nextIm.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, InputEvent.CTRL_MASK), "next");
+		
+		nextIm.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_MASK), "next");
 		
 		this.add(toolBar,BorderLayout.NORTH);
 		this.setJMenuBar(bar);
