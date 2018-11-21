@@ -176,11 +176,14 @@ public class Sample05 {
 			public void mouseDragged(MouseEvent e) {
 				// TODO Auto-generated method stub
 				if(current != null){
+					setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+					
 					int x = e.getX();
 					int y = e.getY();
 					
 					current.setFrame(x-SIDELEN/2,y-SIDELEN/2,SIDELEN,SIDELEN);
 					repaint();
+					
 				}
 				
 			}

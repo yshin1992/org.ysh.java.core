@@ -5,6 +5,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -45,9 +46,16 @@ class FontTextFieldFrame extends JFrame{
 		//字体选择列表
 		fonts = new JComboBox<String>();
 		String[] fontFamilyNames = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+//		for(int i=0,j=fontFamilyNames.length;i<j;i++){
+//			fonts.addItem(fontFamilyNames[i]);
+//		}
+		//当需要在组合框中添加大量的选项时，使用addItem方法的性能就很差了
+		//这时使用DefaultComboBoxModel.addElement方法进行加载更合适，最后再调用JComboBox中的setModel方法
+		DefaultComboBoxModel<String> fontsModel = new DefaultComboBoxModel<String>();
 		for(int i=0,j=fontFamilyNames.length;i<j;i++){
-			fonts.addItem(fontFamilyNames[i]);
+			fontsModel.addElement(fontFamilyNames[i]);
 		}
+		fonts.setModel(fontsModel);
 		
 		fonts.addActionListener(new ActionListener() {
 			
