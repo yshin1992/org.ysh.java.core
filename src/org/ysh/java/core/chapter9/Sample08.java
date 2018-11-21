@@ -85,12 +85,13 @@ public class Sample08 {
 			cutItem.setAccelerator(KeyStroke.getKeyStroke("ctrl X"));
 			menu.add(cutItem);
 			
-			copyItem = new JMenuItem("Copy(Ctrl+C)");
+			copyItem = new JMenuItem("Copy(Ctrl+C)",'C');
 			copyItem.addActionListener(defaultListener);
 			copyItem.setAccelerator(KeyStroke.getKeyStroke("ctrl C"));
 			menu.add(copyItem);
 			
 			deleteItem = new JMenuItem("Delete(Ctrl+D)");
+			deleteItem.setMnemonic('D');
 			deleteItem.addActionListener(defaultListener);
 			deleteItem.setAccelerator(KeyStroke.getKeyStroke("ctrl D"));
 			menu.add(deleteItem);
