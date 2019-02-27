@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.logging.*;
+
 import javax.swing.*;
 
 /**
@@ -42,6 +43,7 @@ public class LoggingImageViewer
 
                Handler consoleHandler = new ConsoleHandler();
                consoleHandler.setLevel(Level.ALL);
+               consoleHandler.setFilter(new MyConsoleFilter());//在这里添加日志拦截器
                Logger.getLogger("com.horstmann.corejava").addHandler(consoleHandler);
                
                JFrame frame = new ImageViewerFrame();
@@ -184,5 +186,24 @@ class ConsoleHandler extends StreamHandler{
 		super.publish(record);
 	    flush();
 	}
+}
+
+/**
+ * 自定义Filter
+ * @author yshin1992
+ *
+ */
+class MyConsoleFilter implements Filter{
+
+	/**
+	 * 这里自定义，当等级不小于INFO时输出日志
+	 */
+	@Override
+	public boolean isLoggable(LogRecord record) {
+		if(record.getLevel().intValue() >= Level.FINE.intValue())
+			return true;
+		return false;
+	}
+	
 }
 
