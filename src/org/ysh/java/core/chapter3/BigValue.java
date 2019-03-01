@@ -2,6 +2,7 @@ package org.ysh.java.core.chapter3;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
 import java.math.RoundingMode;
 
 /**
@@ -33,7 +34,27 @@ public class BigValue {
 //		System.out.println(divide2.toString());
 		BigDecimal divide3 = decimal1.divide(decimal2, 2, RoundingMode.HALF_UP);
 		System.out.println(divide3.toString());
-	
+		
+		BigDecimal one = BigDecimal.ONE;
+		BigDecimal one2 = BigDecimal.valueOf(1);
+		BigDecimal one3 = new BigDecimal("0");
+		BigDecimal one4 = BigDecimal.valueOf(1.0);
+		
+		System.out.println(one == one2);
+		
+		System.out.println(one == one3);
+		
+		System.out.println(one2 == one4);
+		
+		System.out.println(BigDecimal.valueOf(-1) == BigDecimal.valueOf(-1));
+		
+		BigInteger sixteen = BigInteger.valueOf(-16);
+		BigInteger sixteen2 = BigInteger.valueOf(-16);
+		System.out.println(sixteen == sixteen2);
+		
+		BigInteger seventeen = BigInteger.valueOf(-17);
+		BigInteger seventeen2 = BigInteger.valueOf(-17);
+		System.out.println(seventeen == seventeen2);
 	}
 
 }

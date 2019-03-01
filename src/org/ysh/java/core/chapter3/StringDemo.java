@@ -1,12 +1,14 @@
 package org.ysh.java.core.chapter3;
 
+import java.util.Arrays;
+
 /**
  * 字符串示例
  */
 public class StringDemo{
 
 	public static void main(String[] args) {
-		String str = "abcdefg";
+		String str = new String("abcdefg");
 
 		int len = str.length();//字符串长度
 
@@ -54,5 +56,19 @@ public class StringDemo{
 
 		String replaceStr = str1.replace("dd","rc");
 		System.out.println(replaceStr);
+		
+		System.out.println("1234".indexOf('1',-1222));
+		
+		System.out.println("1234".lastIndexOf('1',6565));
+		
+		System.out.println(Arrays.toString("1234".toCharArray()));
+		
+		System.out.println(Arrays.toString("1,3,ds,d".split(",")));
+		
+		
+		final String str6 = "b";
+		String str7 = "a" + str6;
+		String str67 = "ab";
+		System.out.println("str7 = str67 : "+ (str7 == str67));
 	}
 }

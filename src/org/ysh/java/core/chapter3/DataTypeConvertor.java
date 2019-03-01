@@ -11,5 +11,14 @@ public class DataTypeConvertor{
 		int a1 = 128;
 		byte b1 = (byte)a1;//这里需要强转
 		System.out.println(b1);
+		
+		//验证 float和long在一起运算时转换成什么数值:
+		float f = 12.9f;
+		long l = 1288832;
+		
+		//下面的表达式成立
+		//也就是说float和long一起运算时，long转型为float
+		f = f+l;//ok
+		
 	}
 }

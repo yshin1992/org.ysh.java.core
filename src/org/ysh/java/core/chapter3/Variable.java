@@ -19,5 +19,12 @@ public class Variable{
 		System.out.println(_is_member);
 		System.out.println(_is_member_2);
 		
+		//注意,使用变量必须经过显示初始化（也就是赋值）之后，才能被使用
+		//int i;
+		//i=i+$work_days;//The local variable i may not have been initialized
+		
+		//不仅仅是基础数据类型，类也同样必须赋值后才能使用
+		//Integer ia;
+		//System.out.print(ia);//The local variable ia may not have been initialized
 	}
 }

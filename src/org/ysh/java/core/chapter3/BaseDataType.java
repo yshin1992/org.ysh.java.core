@@ -27,6 +27,9 @@ public class BaseDataType {
 
 		double d1 = Double.MAX_VALUE;
 		double d2 = Double.MIN_VALUE;
+		
+		char ch1 = Character.MIN_VALUE;
+		char ch2 = Character.MAX_VALUE;
 
 		System.out.println("byte MAX_VALUE = " + b1);
 		System.out.println("byte MIN_VALUE = " + b2);
@@ -46,6 +49,9 @@ public class BaseDataType {
 		System.out.println("double abs MAX_VALUE = " + d1);
 		System.out.println("double abs MIN_VALUE = " + d2);
 
+		System.out.println("char MAX_VALUE = " + (int)ch1);
+		System.out.println("char MIN_VALUE = " + (int)ch2);
+		
 		boolean bool1 = false;
 
 		System.out.println("Boolean : " + bool1);

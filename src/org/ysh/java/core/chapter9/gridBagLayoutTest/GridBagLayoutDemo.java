@@ -4,6 +4,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
@@ -38,21 +39,44 @@ public class GridBagLayoutDemo {
 
 	class LoginFrame extends JFrame{
 		
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 4883658002210492367L;
+
 		private JLabel nameLabel,paswdLabel;
 		
 		private JTextField nameField;
 		
 		private JPasswordField pswdField;
 		
+		private JButton loginBtn,exitBtn;
+		
 		public LoginFrame(){
 			GridBagLayout layout = new GridBagLayout();
 			setLayout(layout);
-			GridBagConstraints gbc = new GridBagConstraints(0, 0, 1, 1, 50d,50d, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 1, 1), 10,10);
-			nameLabel = new JLabel("姓名");
+			
+			GridBagConstraints gbc = new GridBagConstraints(1, 0, 2, 1, 50d,50d, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 1, 1), 10,10);
+			nameLabel = new JLabel("用户名");
 			add(nameLabel,gbc);
 			
 			nameField = new JTextField();
-			add(nameField,new GridBagConstraints(2, 0, 1, 1, 100d, 100d, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(10,10,10,10), 10, 10));
+			add(nameField,new GridBagConstraints(4, 0, 4, 1, 100d, 100d, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(10,10,10,10), 10, 10));
+			
+			paswdLabel = new JLabel("密码");
+			add(paswdLabel,new GridBagConstraints(1, 2, 1, 1, 50d,50d, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 1, 1), 10,10));
+			
+			
+			pswdField = new JPasswordField();
+			add(pswdField,new GridBagConstraints(4, 2, 4, 1, 100d, 100d, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(10,10,10,10), 10, 10));
+			
+			add(new JLabel(""),new GridBagConstraints(0, 4, 1, 1, 0d,0d, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 1, 1), 10,10));
+			loginBtn = new JButton("登录");
+			add(loginBtn,new GridBagConstraints(1, 4, 2, 1, 50d,50d, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 1, 1), 10,10));
+			add(new JLabel(""),new GridBagConstraints(4, 4, 1, 1, 50d,50d, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 1, 1), 10,10));
+			exitBtn = new JButton("退出");
+			add(exitBtn,new GridBagConstraints(5, 4, 2, 1, 50d,50d, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 1, 1), 10,10));
+			add(new JLabel(""),new GridBagConstraints(8, 4, 1, 1, 0d,0d, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 1, 1), 10,10));
 			
 			this.setSize(320,180);
 			this.setVisible(true);

@@ -73,6 +73,12 @@ public class Operator{
 		//a1 右移5位
 		a1 >>= 5;
 		System.out.println("a1 = " + a1);
+		
+		byte b = -4;
+		System.out.println(b >> 1); //-2 
+		System.out.println( (byte)(b >>> 1)); //126
+		
+		System.out.println((byte)0x80 >> 2 );
 
 	}
 
