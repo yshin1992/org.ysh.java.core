@@ -8,9 +8,10 @@ public class ServiceHandler implements InvocationHandler {
 
 	private Object target;
 	
-	public Object newProxyInstance(Object target){
-		this.target = target;
-		return Proxy.newProxyInstance(target.getClass().getClassLoader(), target.getClass().getInterfaces(), this);
+	@SuppressWarnings("unchecked")
+	public <T> T newProxyInstance(Class<T> clazz,T t){
+		this.target = t;
+		return (T) Proxy.newProxyInstance(clazz.getClassLoader(), clazz.getInterfaces(), this);
 	}
 	
 	@Override

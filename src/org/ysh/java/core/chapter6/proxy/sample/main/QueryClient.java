@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.ysh.java.core.chapter6.proxy.sample.BaseService;
+import org.ysh.java.core.chapter6.proxy.sample.impl.VenderQueryService;
 
 public class QueryClient {
 
@@ -12,7 +13,7 @@ public class QueryClient {
 		// TODO Auto-generated method stub
 		
 		try {
-			BaseService service = (BaseService) AppContext.getProxyBean("org.ysh.java.core.chapter6.proxy.sample.impl.CarQueryService");
+			BaseService service =  AppContext.getProxyBean(VenderQueryService.class);
 			
 			Map<String,Object> condition = new HashMap<String,Object>();
 			condition.put("queryParams", "lalla");

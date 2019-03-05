@@ -6,9 +6,9 @@ public class AppContext {
 	
 	private static ServiceHandler handler = new ServiceHandler();
 	
-	public static Object getProxyBean(String beanClassName) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
-		Object target = Class.forName(beanClassName).newInstance();
-		return handler.newProxyInstance(target);
+	public static <T> T getProxyBean(Class<T> clazz) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
+		T target = clazz.newInstance();
+		return handler.newProxyInstance(clazz,target);
 	}
 	
 }
