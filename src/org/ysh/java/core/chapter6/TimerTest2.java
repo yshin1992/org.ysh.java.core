@@ -14,6 +14,7 @@ import javax.swing.Timer;
  * 使用普通内部类
  * 第一：成员内部类中不能存在任何static的变量和方法（注意，可以定义常量）；
  * 第二：成员内部类是依附于外围类的，所以只有先创建了外围类才能够创建内部类
+ * 第三：可以访问外部类的类成员、类方法、普通成员和普通方法
  * @author yshin1992
  *
  */
@@ -23,6 +24,10 @@ public class TimerTest2 {
 	private boolean beap;
 	
 	private static int count = 0;
+	
+	private static void doNothing(){
+		
+	}
 	
 	class TimerPrinter2 implements ActionListener{
 		
@@ -38,6 +43,7 @@ public class TimerTest2 {
 			if(beap){
 				System.out.println("beep.........."+count++);//也可访问外部静态变量
 			}
+			doNothing();
 		}
 	}
 	
